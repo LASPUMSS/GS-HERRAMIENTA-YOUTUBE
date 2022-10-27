@@ -3,13 +3,17 @@ function obtenerIdChannel(videoId) {
   var videoInf = YouTube.Videos.list('snippet, contentDetails',{id: videoId});
   
   //SpreadsheetApp.getUi().alert('El id de canal del video selecionado es: ' + videoInf.items[0].snippet.channelId);
-  
-  Logger.log(videoInf.items[0].contentDetails.duration);
+  SpreadsheetApp.getUi().alert('El nombre de canal del video selecionado es: ' + 
+                                videoInf.items[0].snippet.channelTitle + '. \r\n' +
+                                'El id de canal del video selecionado es: ' + 
+                                videoInf.items[0].snippet.channelId
+                                )
+
 
 }
 
 function prurba(){
 
-  obtenerIdChannel('ihVVoKk3ugU');
+  obtenerIdChannel('GRfyNBPF_0A');
  
 }

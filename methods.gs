@@ -1,9 +1,9 @@
 var ss = SpreadsheetApp.getActiveSpreadsheet();
 var sheet = ss.getSheetByName('Mi Reporte');
 
-function myReport() {
+function myReport(id_channel) {
 
-  var chanel = YouTube.Channels.list('contentDetails,statistics',{id: 'UC1_JGQOwIsTqgj6JQmxN_Tw'});
+  var chanel = YouTube.Channels.list('contentDetails,statistics',{id: id_channel});
   //Logger.log(chanel);
 
   var item = chanel.items[0];
@@ -31,7 +31,6 @@ function myReport() {
       var videoComents = videostatics.commentCount;
       var videolink = "https://www.youtube.com/watch?v=" + videoId; 
 
-      
       videosData.push( [videoId, title, publishedDate, videoviews, videolikes, videoComents, videolink]);
 
     });
