@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <base target="_top">
+    <?!= include('CSS'); ?>
+
+    <script>
+
+        function correrScript(){
+          var id_ListVdo = document.getElementById('inp_id').value;
+
+          google.script.run.myReportListVdo(id_ListVdo);
+        }
+
+    </script>
+
+  </head>
+  <body>
+      
+    <div class="contenedor">
+
+        <div class="form-comp" class="">
+
+          <label>Id Lista: </label>
+          <input type="text" id="inp_id">
+
+        </div>
+
+
+        <div class="form-comp" class="">
+
+          <button id="btn_Aceptar" onClick="return correrScript();" class="action">ACEPTAR</button>
+
+        </div>
+
+    </div>
+
+  </body>
+
+</html>

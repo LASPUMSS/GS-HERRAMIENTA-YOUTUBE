@@ -6,7 +6,7 @@ function sheetReport(){
     return newSheet;
  
 }
-// Titulos para la funcion de myReport
+// Titulos para la un reporte de videos
 function titulos(){
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   
