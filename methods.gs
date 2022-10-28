@@ -1,5 +1,4 @@
-var ss = SpreadsheetApp.getActiveSpreadsheet();
-
+// Reporte de los videos de un canal publico de YT
 function myReport(id_channel) {
   var sheet = sheetReport();
   sheet.activate();
@@ -18,7 +17,9 @@ function myReport(id_channel) {
 
   do{
 
-    var playList = YouTube.PlaylistItems.list('snippet, contentDetails', {playlistId: playListId, pageToken: nextPageToken});
+    var playList = YouTube.PlaylistItems.list('snippet, contentDetails', 
+                                              {playlistId: playListId, 
+                                              pageToken: nextPageToken});
 
     playList.items.forEach(item => {
 
@@ -54,9 +55,7 @@ function myReport(id_channel) {
 
     });
 
-
     var nextPageToken = playList.nextPageToken;
-
 
   }while(nextPageToken != null)
 
@@ -64,27 +63,18 @@ function myReport(id_channel) {
 
 }
 
-function titulos(){
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+// Devuelve el id de un canal de YT desde el id de un video
+function obtenerIdChannel(videoId) {
+
+  var videoInf = YouTube.Videos.list('snippet, contentDetails',{id: videoId});
   
-  //TITULOS
-  sheet.getRange(1,1).setValue("VIDEO ID");
-  sheet.getRange(1,2).setValue("TITULO");
-  sheet.getRange(1,3).setValue("FECHA");
-  sheet.getRange(1,4).setValue("VISTAS");
-  sheet.getRange(1,5).setValue("LIKES");
-  sheet.getRange(1,6).setValue("N° COMENTARIOS");
-  sheet.getRange(1,7).setValue("LINK DEL VIDEO");
-  sheet.getRange(1,8).setValue("CANAL");
-  sheet.getRange(1,9).setValue("CANAL ID");
-  sheet.getRange(1,10).setValue("DESCRIPCION");
-  sheet.getRange(1,11).setValue("DURACION");
-  sheet.getRange(1,12).setValue("SUBTITULOS");
-  
-  sheet.getRange(1,1,1,12)
-      .setBackground('#6fa8dc')
-      .setFontColor('#ffffff')
-      .setFontWeight('bold')
-      .setHorizontalAlignment('center')
-      .setBorder(true, true, true, true, null, null, '#000000', SpreadsheetApp.BorderStyle.SOLID_THICK);
+  //SpreadsheetApp.getUi().alert('El id de canal del video selecionado es: ' + videoInf.items[0].snippet.channelId);
+  SpreadsheetApp.getUi().alert('El nombre de canal del video selecionado es: ' + 
+                                videoInf.items[0].snippet.channelTitle + '. \r\n' +
+                                'El id de canal del video selecionado es: ' + 
+                                videoInf.items[0].snippet.channelId
+                                )
+
+
 }
+
