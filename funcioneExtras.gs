@@ -12,8 +12,10 @@ function obtenerIdChannel(videoId) {
 
 }
 
-function prurba(){
-
-  obtenerIdChannel('GRfyNBPF_0A');
+function sheetReport(){
+    var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var newSheet = activeSpreadsheet.insertSheet();
+    
+    return newSheet;
  
 }

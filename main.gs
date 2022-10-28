@@ -36,3 +36,4 @@ function formGetIdChanel(){
 function include( nameHtml ){
   return HtmlService.createHtmlOutputFromFile( nameHtml ).getContent();
 };
+
