@@ -1,11 +1,11 @@
 var ss = SpreadsheetApp.getActiveSpreadsheet();
 
-function myReport(id_channel) {
+function myReport() {
   var sheet = sheetReport();
   sheet.activate();
   titulos();
 
-  var chanel = YouTube.Channels.list('contentDetails,statistics',{id: id_channel});
+  var chanel = YouTube.Channels.list('contentDetails,statistics',{id: "UCDdjmBGoXMSSDodGzp0bSwA"});
   //Logger.log(chanel);
 
   var item = chanel.items[0];
@@ -26,13 +26,14 @@ function myReport(id_channel) {
       var videoId = item.contentDetails.videoId;
       var title = item.snippet.title;
       var publishedDate = new Date(item.contentDetails.videoPublishedAt);
-
-      var videostatics = YouTube.Videos.list('statistics',{id: videoId}).items[0].statistics;
-      var videoviews = videostatics.viewCount;
-      var videolikes = videostatics.likeCount;
-      var videoComents = videostatics.commentCount;
-      var videolink = "https://www.youtube.com/watch?v=" + videoId; 
       var desc = item.snippet.description.replace(/(\r\n|\n|\r)/gm, "");
+
+      var videosInf = YouTube.Videos.list('statistics, contentDetails',{id: videoId}).items[0];
+      var videoviews = videosInf.statistics.viewCount;
+      var videolikes = videosInf.statistics.likeCount;
+      var videoComents = videosInf.statistics.commentCount;
+      var videolink = "https://www.youtube.com/watch?v=" + videoId; 
+      var duration =  videosInf.contentDetails.duration;
 
       // INFO DEL CANAL
       var chanTitle = item.snippet.channelTitle;
@@ -48,7 +49,8 @@ function myReport(id_channel) {
                         videolink, 
                         chanTitle, 
                         chanId, 
-                        desc]);
+                        desc,
+                        duration]);
 
     });
 
@@ -75,10 +77,11 @@ function titulos(){
   SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(1,8).setValue("CANAL");
   SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(1,9).setValue("CANAL ID");
   SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(1,10).setValue("DESCRIPCION");
-  SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(1,11).setValue("SUBTITULOS");
+  SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(1,11).setValue("DURACION");
+  SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(1,12).setValue("SUBTITULOS");
   
   SpreadsheetApp.getActiveSpreadsheet().getActiveSheet()
-      .getRange(1,1,1,11)
+      .getRange(1,1,1,12)
       .setBackground('#6fa8dc')
       .setFontColor('#ffffff')
       .setFontWeight('bold')
