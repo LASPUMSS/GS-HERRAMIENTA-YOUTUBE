@@ -1,4 +1,4 @@
-// Reporte de los videos de un canal publico de YT
+// Reporte de los videos de un canal publico de YT 
 function myReportChannel(id_channel){
   var sheet = sheetReport();
   sheet.activate();
@@ -34,7 +34,7 @@ function myReportChannel(id_channel){
       var videolikes = videosInf.statistics.likeCount;
       var videoComents = videosInf.statistics.commentCount;
       var videolink = "https://www.youtube.com/watch?v=" + videoId; 
-      var duration =  videosInf.contentDetails.duration;
+      var duration =  getMiuntesOfStrig(videosInf.contentDetails.duration);
 
       // INFO DEL CANAL
       var chanTitle = item.snippet.channelTitle;

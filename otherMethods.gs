@@ -30,4 +30,29 @@ function titulos(){
       .setFontWeight('bold')
       .setHorizontalAlignment('center')
       .setBorder(true, true, true, true, null, null, '#000000', SpreadsheetApp.BorderStyle.SOLID_THICK);
+  
+  sheet.getRange('K:K').setNumberFormat('#,##0.00');
+}
+
+// Calcular el tiempo en minutos 
+function getMiuntesOfStrig(horaStr){
+  horaStr = horaStr.replace('PT','');
+  var horas=0, minutos=0, segundos=0;
+
+  if(horaStr.includes('H')){
+    horas = parseInt(horaStr.substring(0,horaStr.indexOf('H')))*60
+    horaStr = horaStr.substring(horaStr.indexOf('H')+1, horaStr.length)
+  };
+
+  if(horaStr.includes('M')){
+    minutos = parseInt(horaStr.substring(0,horaStr.indexOf('M')))
+    horaStr = horaStr.substring(horaStr.indexOf('M')+1, horaStr.length)
+  };
+
+  if(horaStr.includes('S')){
+    segundos = parseInt(horaStr.substring(0,horaStr.indexOf('S')))/60
+  };
+
+  return(horas+minutos+segundos)
+
 }
