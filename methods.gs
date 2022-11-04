@@ -64,7 +64,7 @@ function myReportChannel(id_channel){
 };
 
 // Reporte de los videos de una lista publica de YT
-function myReportListVdo(id_ListVdo){
+function myReportListVdo(id_ListVdo="PLxJ9ooR1g5bj1llMHNUHm2XpdNXuNyek2"){
 
   var sheet = sheetReport();
   sheet.activate();
@@ -86,30 +86,34 @@ function myReportListVdo(id_ListVdo){
       var publishedDate = new Date(item.contentDetails.videoPublishedAt);
       var desc = item.snippet.description.replace(/(\r\n|\n|\r)/gm, "");
 
-      var videosInf = YouTube.Videos.list('snippet, statistics, contentDetails',{id: videoId}).items[0];
-      var videoviews = videosInf.statistics.viewCount;
-      var videolikes = videosInf.statistics.likeCount;
-      var videoComents = videosInf.statistics.commentCount;
-      var videolink = "https://www.youtube.com/watch?v=" + videoId; 
-      var duration =  getMiuntesOfStrig(videosInf.contentDetails.duration);
+      if(title!="Private video"){
+        //Logger.log(title);
 
-      // INFO DEL CANAL
-      var chanTitle = item.snippet.channelTitle;
-      var chanId = item.snippet.channelId;
+        var videosInf = YouTube.Videos.list('snippet, statistics, contentDetails',{id: videoId}).items[0];
+        var videoviews = videosInf.statistics.viewCount;
+        var videolikes = videosInf.statistics.likeCount;
+        var videoComents = videosInf.statistics.commentCount;
+        var videolink = "https://www.youtube.com/watch?v=" + videoId; 
+        var duration =  getMiuntesOfStrig(videosInf.contentDetails.duration);
 
-      //INFO LISTA
+        // INFO DEL CANAL
+        var chanTitle = item.snippet.channelTitle;
+        var chanId = item.snippet.channelId;
 
-      videosData.push( [videoId, 
-                        title, 
-                        publishedDate, 
-                        videoviews, 
-                        videolikes, 
-                        videoComents, 
-                        videolink, 
-                        chanTitle, 
-                        chanId, 
-                        desc,
-                        duration]);
+        //INFO LISTA
+
+        videosData.push( [videoId, 
+                          title, 
+                          publishedDate, 
+                          videoviews, 
+                          videolikes, 
+                          videoComents, 
+                          videolink, 
+                          chanTitle, 
+                          chanId, 
+                          desc,
+                          duration]);
+      };
 
     });
 
