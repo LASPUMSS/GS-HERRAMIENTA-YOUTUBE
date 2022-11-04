@@ -72,47 +72,54 @@ function myReportListVdo(id_ListVdo){
 
   var nextPageToken = '';
   var videosData=[];
-  var listVdo = YouTube.PlaylistItems.list('snippet, contentDetails', 
-                                              {playlistId: id_ListVdo, 
-                                              pageToken: nextPageToken});
-  
-  listVdo.items.forEach(item => {
 
-    // INFO DEL VIEO
-    var videoId = item.contentDetails.videoId;
-    var title = item.snippet.title;
-    var publishedDate = new Date(item.contentDetails.videoPublishedAt);
-    var desc = item.snippet.description.replace(/(\r\n|\n|\r)/gm, "");
+  do{
+    var listVdo = YouTube.PlaylistItems.list('snippet, contentDetails', 
+                                                {playlistId: id_ListVdo, 
+                                                pageToken: nextPageToken});
+    
+    listVdo.items.forEach(item => {
 
-    var videosInf = YouTube.Videos.list('snippet, statistics, contentDetails',{id: videoId}).items[0];
-    var videoviews = videosInf.statistics.viewCount;
-    var videolikes = videosInf.statistics.likeCount;
-    var videoComents = videosInf.statistics.commentCount;
-    var videolink = "https://www.youtube.com/watch?v=" + videoId; 
-    var duration =  videosInf.contentDetails.duration;
+      // INFO DEL VIEO
+      var videoId = item.contentDetails.videoId;
+      var title = item.snippet.title;
+      var publishedDate = new Date(item.contentDetails.videoPublishedAt);
+      var desc = item.snippet.description.replace(/(\r\n|\n|\r)/gm, "");
 
-    // INFO DEL CANAL
-    var chanTitle = item.snippet.channelTitle;
-    var chanId = item.snippet.channelId;
+      var videosInf = YouTube.Videos.list('snippet, statistics, contentDetails',{id: videoId}).items[0];
+      var videoviews = videosInf.statistics.viewCount;
+      var videolikes = videosInf.statistics.likeCount;
+      var videoComents = videosInf.statistics.commentCount;
+      var videolink = "https://www.youtube.com/watch?v=" + videoId; 
+      var duration =  videosInf.contentDetails.duration;
 
-    //INFO LISTA
+      // INFO DEL CANAL
+      var chanTitle = item.snippet.channelTitle;
+      var chanId = item.snippet.channelId;
 
-    videosData.push( [videoId, 
-                      title, 
-                      publishedDate, 
-                      videoviews, 
-                      videolikes, 
-                      videoComents, 
-                      videolink, 
-                      chanTitle, 
-                      chanId, 
-                      desc,
-                      duration]);
+      //INFO LISTA
 
-  });
+      videosData.push( [videoId, 
+                        title, 
+                        publishedDate, 
+                        videoviews, 
+                        videolikes, 
+                        videoComents, 
+                        videolink, 
+                        chanTitle, 
+                        chanId, 
+                        desc,
+                        duration]);
+
+    });
+
+    var nextPageToken = listVdo.nextPageToken;
+
+  }while(nextPageToken != null)
 
   //Logger.log(videosData)
   sheet.getRange(2, 1, videosData.length, videosData[0].length).setValues(videosData);
+
 };
 
 // Devuelve el id de un canal de YT desde el id de un video
